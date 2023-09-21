@@ -1,0 +1,71 @@
+﻿@model List<mvc_task.Models.manage_sequence>
+
+@{
+    ViewBag.Title = "view_sequence";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+
+                        <h3 class="card-title float-right">Sequence  List </h3>
+                    </div>
+                    <div class="card-body">
+                        <table id="example" class="table table-bordered table-hover justify-content-center text-center">
+                            <thead>
+                                <tr class="bg-primary">
+                                    <th>Sr.No.</th>
+                                    <th>Branch</th>
+                                    <th>Quotation Prefix No</th>
+                                    <th>QuotationNo</th>
+                                    <th>SaleBookPrefixNo</th>
+                                    <th>PIPrefixNo</th>
+                                    <th>PINo</th>
+                                    <th>POPrefixNo</th>
+                                    <th>PONo</th>
+                                    <th>InvoicePrefixNo</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@item.Branch</td>
+                                            <td>@item.QuotationPrefixNo</td>
+                                            <td>@item.QuotationNo</td>
+                                            <td>@item.SaleBookPrefixNo</td>
+                                            <td>@item.PIPrefixNo</td>
+                                            <td>@item.PINo</td>
+                                            <td>@item.POPrefixNo</td>
+                                            <td>@item.PONo</td>
+                                            <td>@item.InvoicePrefixNo</td>
+                                            <td><a href="/admin/add_sequence?id=@(item.id)" class="btn btn-success" style="width:50px"><i class="fas fa-edit"></i></a> || <a href="/admin/delet_sequence?id=@(item.id)" class="btn btn-danger " style="width:50px"> <i class="fas fa-solid fa-trash"></i></a></td>
+                                        </tr>
+                                        i++;
+                                    }
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- /.container-fluid -->
+</section>
+
