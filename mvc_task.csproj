@@ -127,7 +127,9 @@
     </Compile>
     <Compile Include="Models\DataServices.cs" />
     <Compile Include="Models\manage_pi.cs" />
+    <Compile Include="Models\manage_po.cs" />
     <Compile Include="Models\manage_product.cs" />
+    <Compile Include="Models\manage_quotation.cs" />
     <Compile Include="Models\manage_salebook.cs" />
     <Compile Include="Models\manage_sequence.cs" />
     <Compile Include="Models\manage_subadmin.cs" />
@@ -2345,6 +2347,10 @@
     <Content Include="Views\Admin\view_salebook.cshtml" />
     <Content Include="Views\Admin\add_pi.cshtml" />
     <Content Include="Views\Admin\view_pi.cshtml" />
+    <Content Include="Views\Admin\add_po.cshtml" />
+    <Content Include="Views\Admin\add_quotation.cshtml" />
+    <Content Include="Views\Admin\view_po.cshtml" />
+    <Content Include="Views\Admin\view_quotation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

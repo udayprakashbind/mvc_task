@@ -122,6 +122,7 @@
                                 <img src="~/assets/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
+                                        <a href="~/Views/Shared/_mainLayout.cshtml">~/Views/Shared/_mainLayout.cshtml</a>
                                         Nora Silvester
                                         <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
                                     </h3>
@@ -212,7 +213,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                    with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -354,6 +355,55 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    PO Manager
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/add_po" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>add_po</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/view_po" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>view_po</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Quotation Manager
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/add_quotation" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>add_quotation</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/view_quotation" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>view_quotation</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
 
                     </ul>
 

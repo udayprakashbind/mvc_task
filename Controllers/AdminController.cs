@@ -364,6 +364,110 @@ namespace mvc_task.Controllers
         #endregion
 
 
+        #region manage PO
+
+        public ActionResult add_po(string id)
+        {
+            manage_po po = new manage_po();
+
+
+            if (id != null && id != "")
+            {
+                po = db.getPObyId(id);
+            }
+
+
+            return View(po);
+        }
+        [HttpPost]
+        public ActionResult insert_po(manage_po po)
+        {
+
+            var dd = db.insert_PO(po);
+
+            if (dd == true)
+            {
+                TempData["Message"] = "PO Submitted Successfully";
+                TempData["para"] = "true";
+            }
+            else
+            {
+                TempData["Message"] = "Please Review Your Input Details!!";
+                TempData["para"] = "false";
+            }
+
+            return RedirectToAction("add_po");
+        }
+
+        public ActionResult view_po()
+        {
+            List<manage_po> polist = new List<manage_po>();
+            polist = db.getPOlist();
+            return View(polist);
+        }
+
+        public ActionResult delet_po(string id)
+        {
+            db.delete_PO(id);
+            return RedirectToAction("view_po");
+        }
+
+
+        #endregion
+
+
+        #region manage Quotation
+
+        public ActionResult add_quotation(string id)
+        {
+
+            manage_quotation quot = new manage_quotation();
+
+
+            if (id != null && id != "")
+            {
+                quot = db.getQuotationbyId(id);
+            }
+
+
+            return View(quot);
+        }
+        [HttpPost]
+        public ActionResult insert_quotation(manage_quotation quot)
+        {
+
+            var dd = db.insert_Quotation(quot);
+
+            if (dd == true)
+            {
+                TempData["Message"] = "Quotation Submitted Successfully";
+                TempData["para"] = "true";
+            }
+            else
+            {
+                TempData["Message"] = "Please Review Your Input Details!!";
+                TempData["para"] = "false";
+            }
+
+            return RedirectToAction("add_quotation");
+        }
+
+        public ActionResult view_quotation()
+        {
+
+            List<manage_quotation> quotlist = new List<manage_quotation>();
+            quotlist = db.getQuotationlist();
+            return View(quotlist);
+        }
+
+        public ActionResult delet_quotation(string id)
+        {
+            db.delete_Quotation(id);
+            return RedirectToAction("view_quotation");
+        }
+
+
+        #endregion
 
     }
 }

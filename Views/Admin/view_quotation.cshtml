@@ -1,0 +1,74 @@
+﻿@model List<mvc_task.Models.manage_quotation>
+
+@{
+    ViewBag.Title = "view_quotation";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+
+                        <h3 class="card-title float-right">Quotation List </h3>
+                    </div>
+                    <div class="card-body">
+                        <table id="example" class="table table-bordered table-hover justify-content-center text-center">
+                            <thead>
+                                <tr class="bg-primary">
+                                    <th>Sr.No.</th>
+                                    <th>Quotation_No</th>
+                                    <th>Lead_Reference</th>
+                                    <th>Client_Name</th>
+                                    <th>Contact_Person_No</th>
+                                    <th>Email</th>
+                                    <th>Company_Number</th>
+                                    <th>Address</th>
+                                    <th>Employee</th>
+                                    <th>Branch</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@item.Quotation_No</td>
+                                            <td>@item.Lead_Reference</td>
+                                            <td>@item.Client_Name</td>
+                                            <td>@item.Contact_Person_No</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.Company_Number</td>
+                                            <td>@item.Address</td>
+                                            <td>@item.Employee</td>
+                                            <td>@item.Branch</td>
+                                            <td><a href="/admin/add_quotation?id=@(item.id)" class="btn btn-success" style="width:50px"><i class="fas fa-edit"></i></a> || <a href="/admin/delet_quotation?id=@(item.id)" class="btn btn-danger " style="width:50px"> <i class="fas fa-solid fa-trash"></i></a></td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- /.container-fluid -->
+</section>
+
+
+

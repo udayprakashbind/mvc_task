@@ -902,5 +902,356 @@ namespace mvc_task.Models
 
         #endregion
 
+
+        #region manage PO
+        public bool insert_PO(mvc_task.Models.manage_po po)
+        {
+            SqlCommand cmd = new SqlCommand("sp_PO", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@PO_Number", po.PO_Number);
+            cmd.Parameters.AddWithValue("@Vendor_Id", po.Vendor_Id);
+            cmd.Parameters.AddWithValue("@Client_ID", po.Client_ID);
+            cmd.Parameters.AddWithValue("@PO_Date", po.PO_Date);
+            cmd.Parameters.AddWithValue("@Manager", po.Manager);
+            cmd.Parameters.AddWithValue("@Vendor_Email", po.Vendor_Email);
+            cmd.Parameters.AddWithValue("@LAN", po.LAN);
+            cmd.Parameters.AddWithValue("@PromoCode", po.PromoCode);
+            cmd.Parameters.AddWithValue("@SDF_Order", po.SDF_Order);
+            cmd.Parameters.AddWithValue("@MS_Account_Manager", po.MS_Account_Manager);
+            cmd.Parameters.AddWithValue("@Payment_InDays", po.Payment_InDays);
+            cmd.Parameters.AddWithValue("@Delivery_In_Days", po.Delivery_In_Days);
+            cmd.Parameters.AddWithValue("@Delivery_Mode", po.Delivery_Mode);
+            cmd.Parameters.AddWithValue("@MPN_ID", po.MPN_ID);
+            cmd.Parameters.AddWithValue("@AEP_Authorization_No", po.AEP_Authorization_No);
+            cmd.Parameters.AddWithValue("@DomainID", po.DomainID);
+            cmd.Parameters.AddWithValue("@CDC_Discount", po.CDC_Discount);
+            cmd.Parameters.AddWithValue("@CDC_Discount_Amount", po.CDC_Discount_Amount);
+            cmd.Parameters.AddWithValue("@After_Discount_Amount", po.After_Discount_Amount);
+            cmd.Parameters.AddWithValue("@IGST_Tax", po.IGST_Tax);
+            cmd.Parameters.AddWithValue("@Tax_Amount", po.Tax_Amount);
+            cmd.Parameters.AddWithValue("@After_Tax_Amount", po.After_Tax_Amount);
+            cmd.Parameters.AddWithValue("@CN", po.CN);
+            cmd.Parameters.AddWithValue("@CN_Amount", po.CN_Amount);
+            cmd.Parameters.AddWithValue("@Grand_Total_Amount", po.Grand_Total_Amount);
+            cmd.Parameters.AddWithValue("@Purchase_Amount", po.Purchase_Amount);
+            cmd.Parameters.AddWithValue("@Total_Sales_Amount", po.Total_Sales_Amount);
+            cmd.Parameters.AddWithValue("@PL_Amount", po.PL_Amount);
+            cmd.Parameters.AddWithValue("@Id", po.id);
+
+            if (po.id != null && po.id != "")
+            {
+                cmd.Parameters.AddWithValue("@Action", "updatePObyId");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Action", "insert_PO");
+
+            }
+
+            if (con.State == ConnectionState.Closed)
+                con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public List<manage_po> getPOlist()
+        {
+            List<manage_po> polist = new List<manage_po>();
+            con.Open();
+            SqlCommand cmd = new SqlCommand("sp_PO", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "getAllPO");
+            SqlDataReader sdr = cmd.ExecuteReader();
+            manage_po po = new manage_po();
+            if (sdr.HasRows)
+            {
+                while (sdr.Read())
+                {
+                    po = new manage_po();
+                    po.id = sdr["Id"].ToString();
+                    po.PO_Number = sdr["PO_Number"].ToString();
+                    po.Vendor_Id = sdr["Vendor_Id"].ToString();
+                    po.Client_ID = sdr["Client_ID"].ToString();
+                    po.PO_Date = sdr["PO_Date"].ToString();
+                    po.Manager = sdr["Manager"].ToString();
+                    po.Vendor_Email = sdr["Vendor_Email"].ToString();
+                    po.LAN = sdr["LAN"].ToString();
+                    po.PromoCode = sdr["PromoCode"].ToString();
+                    po.SDF_Order = sdr["SDF_Order"].ToString();
+                    po.MS_Account_Manager = sdr["MS_Account_Manager"].ToString();
+                    po.Payment_InDays = sdr["Payment_InDays"].ToString();
+                    po.Delivery_In_Days = sdr["Delivery_In_Days"].ToString();
+                    po.Delivery_Mode = sdr["Delivery_Mode"].ToString();
+                    po.MPN_ID = sdr["MPN_ID"].ToString();
+                    po.AEP_Authorization_No = sdr["AEP_Authorization_No"].ToString();
+                    po.DomainID = sdr["DomainID"].ToString();
+                    po.CDC_Discount = sdr["CDC_Discount"].ToString();
+                    po.CDC_Discount_Amount = sdr["CDC_Discount_Amount"].ToString();
+                    po.After_Discount_Amount = sdr["After_Discount_Amount"].ToString();
+                    po.IGST_Tax = sdr["IGST_Tax"].ToString();
+                    po.Tax_Amount = sdr["Tax_Amount"].ToString();
+                    po.After_Tax_Amount = sdr["After_Tax_Amount"].ToString();
+                    po.CN = sdr["CN"].ToString();
+                    po.CN_Amount = sdr["CN_Amount"].ToString();
+                    po.Grand_Total_Amount = sdr["Grand_Total_Amount"].ToString();
+                    po.Purchase_Amount = sdr["Purchase_Amount"].ToString();
+                    po.Total_Sales_Amount = sdr["Total_Sales_Amount"].ToString();
+                    po.PL_Amount = sdr["PL_Amount"].ToString();
+                    polist.Add(po);
+
+                }
+            }
+            sdr.Close();
+            con.Close();
+            return polist;
+
+
+        }
+
+        public manage_po getPObyId(string id)
+        {
+            manage_po po = new manage_po();
+            con.Open();
+            SqlCommand cmd = new SqlCommand("sp_PO", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "getPObyId");
+            cmd.Parameters.AddWithValue("@Id", id);
+            SqlDataReader sdr = cmd.ExecuteReader();
+            if (sdr.HasRows)
+            {
+                sdr.Read();
+                po.id = sdr["Id"].ToString();
+                po.PO_Number = sdr["PO_Number"].ToString();
+                po.Vendor_Id = sdr["Vendor_Id"].ToString();
+                po.Client_ID = sdr["Client_ID"].ToString();
+                po.PO_Date = sdr["PO_Date"].ToString();
+                po.Manager = sdr["Manager"].ToString();
+                po.Vendor_Email = sdr["Vendor_Email"].ToString();
+                po.LAN = sdr["LAN"].ToString();
+                po.PromoCode = sdr["PromoCode"].ToString();
+                po.SDF_Order = sdr["SDF_Order"].ToString();
+                po.MS_Account_Manager = sdr["MS_Account_Manager"].ToString();
+                po.Payment_InDays = sdr["Payment_InDays"].ToString();
+                po.Delivery_In_Days = sdr["Delivery_In_Days"].ToString();
+                po.Delivery_Mode = sdr["Delivery_Mode"].ToString();
+                po.MPN_ID = sdr["MPN_ID"].ToString();
+                po.AEP_Authorization_No = sdr["AEP_Authorization_No"].ToString();
+                po.DomainID = sdr["DomainID"].ToString();
+                po.CDC_Discount = sdr["CDC_Discount"].ToString();
+                po.CDC_Discount_Amount = sdr["CDC_Discount_Amount"].ToString();
+                po.After_Discount_Amount = sdr["After_Discount_Amount"].ToString();
+                po.IGST_Tax = sdr["IGST_Tax"].ToString();
+                po.Tax_Amount = sdr["Tax_Amount"].ToString();
+                po.After_Tax_Amount = sdr["After_Tax_Amount"].ToString();
+                po.CN = sdr["CN"].ToString();
+                po.CN_Amount = sdr["CN_Amount"].ToString();
+                po.Grand_Total_Amount = sdr["Grand_Total_Amount"].ToString();
+                po.Purchase_Amount = sdr["Purchase_Amount"].ToString();
+                po.Total_Sales_Amount = sdr["Total_Sales_Amount"].ToString();
+                po.PL_Amount = sdr["PL_Amount"].ToString();
+            }
+            con.Close();
+            return po;
+        }
+
+        public bool delete_PO(string id)
+        {
+            if (con.State == ConnectionState.Closed)
+
+                con.Open();
+            SqlCommand cmd = new SqlCommand("sp_PO", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "deletePObyId");
+            cmd.Parameters.AddWithValue("@Id", id);
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region manage Quotation
+        public bool insert_Quotation(mvc_task.Models.manage_quotation quotation)
+        {
+            //done
+            SqlCommand cmd = new SqlCommand("sp_Quotation", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Quotation_No", quotation.Quotation_No);
+            cmd.Parameters.AddWithValue("@Lead_Reference", quotation.Lead_Reference);
+            cmd.Parameters.AddWithValue("@Client_Name", quotation.Client_Name);
+            cmd.Parameters.AddWithValue("@Contact_Person_No", quotation.Contact_Person_No);
+            cmd.Parameters.AddWithValue("@Email", quotation.Email);
+            cmd.Parameters.AddWithValue("@Company_Number", quotation.Company_Number);
+            cmd.Parameters.AddWithValue("@Address", quotation.Address);
+            cmd.Parameters.AddWithValue("@Employee", quotation.Employee);
+            cmd.Parameters.AddWithValue("@Branch", quotation.Branch);
+            cmd.Parameters.AddWithValue("@Select_Bill_TO", quotation.Select_Bill_TO);
+            cmd.Parameters.AddWithValue("@Date", quotation.Date);
+            cmd.Parameters.AddWithValue("@Select_Ship_TO", quotation.Select_Ship_TO);
+            cmd.Parameters.AddWithValue("@Add_PORNo", quotation.Add_PORNo);
+            cmd.Parameters.AddWithValue("@LAN_ID", quotation.LAN_ID);
+            cmd.Parameters.AddWithValue("@PromoCode", quotation.PromoCode);
+            cmd.Parameters.AddWithValue("@DomainID", quotation.DomainID);
+            cmd.Parameters.AddWithValue("@InState_OutState", quotation.InState_OutState);
+            cmd.Parameters.AddWithValue("@Tax", quotation.Tax);
+            cmd.Parameters.AddWithValue("@TAX_Amount", quotation.TAX_Amount);
+            cmd.Parameters.AddWithValue("@Price_Before_TAX", quotation.Price_Before_TAX);
+            cmd.Parameters.AddWithValue("@Price_After_TAX", quotation.Price_After_TAX);
+            cmd.Parameters.AddWithValue("@Generated_Date", quotation.Generated_Date);
+            cmd.Parameters.AddWithValue("@Id", quotation.id);
+
+            if (quotation.id != null && quotation.id != "")
+            {
+                cmd.Parameters.AddWithValue("@Action", "updateQuotationById");
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Action", "insert_quotation");
+
+            }
+
+            if (con.State == ConnectionState.Closed)
+                con.Open();
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public List<manage_quotation> getQuotationlist()
+        {
+            List<manage_quotation> quotlist = new List<manage_quotation>();
+            con.Open();
+            SqlCommand cmd = new SqlCommand("sp_Quotation", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "selectAllQuotation");
+            SqlDataReader sdr = cmd.ExecuteReader();
+            manage_quotation quot = new manage_quotation();
+            if (sdr.HasRows)
+            {
+                while (sdr.Read())
+                {
+                    quot = new manage_quotation();
+                    quot.id = sdr["Id"].ToString();
+                    quot.Quotation_No = sdr["Quotation_No"].ToString();
+                    quot.Lead_Reference = sdr["Lead_Reference"].ToString();
+                    quot.Client_Name = sdr["Client_Name"].ToString();
+                    quot.Contact_Person_No = sdr["Contact_Person_No"].ToString();
+                    quot.Email = sdr["Email"].ToString();
+                    quot.Company_Number = sdr["Company_Number"].ToString();
+                    quot.Address = sdr["Address"].ToString();
+                    quot.Employee = sdr["Employee"].ToString();
+                    quot.Branch = sdr["Branch"].ToString();
+                    quot.Select_Bill_TO = sdr["Select_Bill_TO"].ToString();
+                    quot.Date = sdr["Date"].ToString();
+                    quot.Select_Ship_TO = sdr["Select_Ship_TO"].ToString();
+                    quot.Add_PORNo = sdr["Add_PORNo"].ToString();
+                    quot.LAN_ID = sdr["LAN_ID"].ToString();
+                    quot.PromoCode = sdr["PromoCode"].ToString();
+                    quot.DomainID = sdr["DomainID"].ToString();
+                    quot.InState_OutState = sdr["InState_OutState"].ToString();
+                    quot.Tax = sdr["Tax"].ToString();
+                    quot.TAX_Amount = sdr["TAX_Amount"].ToString();
+                    quot.Price_Before_TAX = sdr["Price_Before_TAX"].ToString();
+                    quot.Price_After_TAX = sdr["Price_After_TAX"].ToString();
+                    quot.Generated_Date = sdr["Generated_Date"].ToString();
+
+                    quotlist.Add(quot);
+
+                }
+            }
+            sdr.Close();
+            con.Close();
+            return quotlist;
+
+        }
+
+        public manage_quotation getQuotationbyId(string id)
+        {
+            manage_quotation quot = new manage_quotation();
+            con.Open();
+            SqlCommand cmd = new SqlCommand("sp_Quotation", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "selectQuotationById");
+            cmd.Parameters.AddWithValue("@Id", id);
+            SqlDataReader sdr = cmd.ExecuteReader();
+            if (sdr.HasRows)
+            {
+                sdr.Read();
+                quot.id = sdr["Id"].ToString();
+                quot.Quotation_No = sdr["Quotation_No"].ToString();
+                quot.Lead_Reference = sdr["Lead_Reference"].ToString();
+                quot.Client_Name = sdr["Client_Name"].ToString();
+                quot.Contact_Person_No = sdr["Contact_Person_No"].ToString();
+                quot.Email = sdr["Email"].ToString();
+                quot.Company_Number = sdr["Company_Number"].ToString();
+                quot.Address = sdr["Address"].ToString();
+                quot.Employee = sdr["Employee"].ToString();
+                quot.Branch = sdr["Branch"].ToString();
+                quot.Select_Bill_TO = sdr["Select_Bill_TO"].ToString();
+                quot.Date = sdr["Date"].ToString();
+                quot.Select_Ship_TO = sdr["Select_Ship_TO"].ToString();
+                quot.Add_PORNo = sdr["Add_PORNo"].ToString();
+                quot.LAN_ID = sdr["LAN_ID"].ToString();
+                quot.PromoCode = sdr["PromoCode"].ToString();
+                quot.DomainID = sdr["DomainID"].ToString();
+                quot.InState_OutState = sdr["InState_OutState"].ToString();
+                quot.Tax = sdr["Tax"].ToString();
+                quot.TAX_Amount = sdr["TAX_Amount"].ToString();
+                quot.Price_Before_TAX = sdr["Price_Before_TAX"].ToString();
+                quot.Price_After_TAX = sdr["Price_After_TAX"].ToString();
+                quot.Generated_Date = sdr["Generated_Date"].ToString();
+            }
+            con.Close();
+            return quot;
+        }
+
+        public bool delete_Quotation(string id)
+        {
+            if (con.State == ConnectionState.Closed)
+
+                con.Open();
+            SqlCommand cmd = new SqlCommand("sp_Quotation", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Action", "deleteQuotation");
+            cmd.Parameters.AddWithValue("@Id", id);
+            int i = cmd.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+
     }
 }
